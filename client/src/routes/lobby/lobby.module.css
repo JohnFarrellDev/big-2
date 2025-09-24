@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100svh;
   background: url("https://images.unsplash.com/photo-1624585131222-dd65366b41bd")
     center/cover no-repeat;
   font-family: "Poppins", sans-serif;
@@ -31,7 +31,7 @@
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
   color: #facc15; /* gold */
@@ -42,12 +42,14 @@
   font-size: 1.25rem;
   margin-bottom: 2rem;
   color: #d1d5db;
+  text-wrap: pretty;
 }
 
 .actions {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .createBtn {
@@ -60,37 +62,10 @@
   border-radius: 0.75rem;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
-  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .createBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-.input {
-  flex: 2;
-  padding: 0.8rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-size: 1rem;
-  text-align: center;
-  outline: none;
-}
-
-.joinBtn {
-  flex: 1;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
-  font-weight: 700;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.joinBtn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
