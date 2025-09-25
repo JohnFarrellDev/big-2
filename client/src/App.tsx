@@ -1,7 +1,7 @@
-import { Lobby } from "./routes/lobby/lobby";
+import { Home } from "./routes/home/home";
 
 function App() {
-  return <Lobby />;
+  return <Home />;
 }
 
 export default App;
