@@ -6,8 +6,20 @@ type PlayerState = {
   setName: (newName: string) => void;
 };
 
+function getOrCreateId(): string {
+  const stored = localStorage.getItem("playerId");
+  if (stored) return stored;
+
+  const id = self.crypto.randomUUID();
+  localStorage.setItem("playerId", id);
+  return id;
+}
+
 export const usePlayer = create<PlayerState>((set) => ({
-  id: self.crypto.randomUUID(),
-  name: "",
-  setName: (newName: string) => set({ name: newName }),
+  id: getOrCreateId(),
+  name: localStorage.getItem("playerName") || "",
+  setName: (newName: string) => {
+    localStorage.setItem("playerName", newName);
+    set({ name: newName });
+  },
 }));
