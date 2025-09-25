@@ -8,10 +8,9 @@ export default function Lobby() {
     from: "/lobby/$lobbyId",
     select: (p) => p.lobbyId,
   });
-  console.log("🚀 ~ Lobby ~ lobbyId:", lobbyId);
 
   const { name } = usePlayer();
-  const lobby = useLobby(lobbyId, name || "Player");
+  const lobby = useLobby(lobbyId, name);
 
   if (!lobby) return <div className={styles.loading}>Connecting…</div>;
 
@@ -19,12 +18,11 @@ export default function Lobby() {
     <div className={styles.container}>
       <h2 className={styles.title}>Room {lobby.id}</h2>
       <ul className={styles.list}>
-        <pre>{JSON.stringify(lobby, null, 2)}</pre>
-        {/* {lobby.players.map((p) => (
+        {lobby.players.map((p) => (
           <li key={p.id} className={styles.player}>
-            <span className={styles.dot}>●</span> {p.name}
+            {p.name}
           </li>
-        ))} */}
+        ))}
       </ul>
     </div>
   );
