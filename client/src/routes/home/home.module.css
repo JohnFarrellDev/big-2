@@ -1,9 +1,9 @@
 .container {
+  min-height: 100svh;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100svh;
   background: radial-gradient(circle at center, #531450 0%, #233a6d 100%);
   font-family: "Poppins", sans-serif;
   color: white;
