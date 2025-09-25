@@ -1,4 +1,4 @@
-export async function createNewRoom({
+export async function createNewLobby({
   playerId,
   name,
 }: {
@@ -6,7 +6,7 @@ export async function createNewRoom({
   name: string;
 }) {
   try {
-    const res = await fetch("http://localhost:4000/rooms", {
+    const res = await fetch("http://localhost:4000/lobby", {
       method: "POST",
       body: JSON.stringify({ playerId, name }),
       headers: { "Content-Type": "application/json" },
@@ -17,7 +17,7 @@ export async function createNewRoom({
 
     return data;
   } catch (err) {
-    console.error("Failed to create room", err);
-    alert("Could not create a room, please try again.");
+    console.error("Failed to create lobby", err);
+    alert("Could not create a lobby, please try again.");
   }
 }

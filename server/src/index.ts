@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import cookie from "@fastify/cookie";
-import { createRoom, getRoom, joinRoom } from "./store";
+import { createLobby, getLobby, joinLobby } from "./store";
 import { z } from "zod";
 
 async function start() {
@@ -13,26 +13,25 @@ async function start() {
     return { status: "ok" };
   });
 
-  // create a new room
-  app.post("/rooms", async (req, reply) => {
-    console.log("🚀 ~ start ~ req:", req.body);
+  // create a new lobby
+  app.post("/lobby", async (req, reply) => {
     const { playerId, name } = z
       .object({ playerId: z.uuid(), name: z.string().min(1).max(20) })
       .parse(req.body);
 
-    const room = createRoom();
+    const lobby = createLobby();
 
-    joinRoom(room.id, playerId, name);
+    joinLobby(lobby.id, playerId, name);
 
-    reply.send({ id: room.id, playerId, name });
+    reply.send({ lobbyId: lobby.id, playerId, name });
   });
 
-  // get room state
-  app.get("/rooms/:id", async (req, reply) => {
+  // get lobby state
+  app.get("/lobby/:id", async (req, reply) => {
     const { id } = z.object({ id: z.uuid() }).parse(req.params);
-    const room = getRoom(id);
-    if (!room) return reply.code(404).send({ error: "not_found" });
-    reply.send(room);
+    const lobby = getLobby(id);
+    if (!lobby) return reply.code(404).send({ error: "not_found" });
+    reply.send(lobby);
   });
 
   const PORT = Number(process.env.PORT || 4000);

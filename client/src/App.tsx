@@ -1,7 +1,8 @@
-import { Home } from "./routes/home/home";
+import { router } from "./routes/routes";
+import { RouterProvider } from "@tanstack/react-router";
 
 function App() {
-  return <Home />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

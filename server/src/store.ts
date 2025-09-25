@@ -6,49 +6,49 @@ type User = {
   isAdmin: boolean;
 };
 
-export type Room = {
+export type Lobby = {
   id: string;
   createdAt: number;
   seats: User[];
 };
 
-const rooms = new Map<string, Room>();
+const lobbies = new Map<string, Lobby>();
 
 const MAX_SEATS = 20;
 
-export function createRoom(): Room {
+export function createLobby(): Lobby {
   const id = randomUUID().toUpperCase();
-  const room: Room = { id, createdAt: Date.now(), seats: [] };
-  rooms.set(id, room);
-  return room;
+  const lobby: Lobby = { id, createdAt: Date.now(), seats: [] };
+  lobbies.set(id, lobby);
+  return lobby;
 }
 
-export function getRoom(id: string): Room | null {
-  return rooms.get(id.toUpperCase()) ?? null;
+export function getLobby(id: string): Lobby | null {
+  return lobbies.get(id.toUpperCase()) ?? null;
 }
 
-export function joinRoom(id: string, playerId: string, name: string): Room {
-  const room = getRoom(id) ?? createRoomWithId(id);
-  const existing = room.seats.find((s) => s.id === playerId);
+export function joinLobby(id: string, playerId: string, name: string): Lobby {
+  const lobby = getLobby(id) ?? createLobbyWithId(id);
+  const existing = lobby.seats.find((s) => s.id === playerId);
   if (existing) {
     existing.name = name;
-    return room;
+    return lobby;
   }
-  if (room.seats.length >= MAX_SEATS) throw new Error("room_full");
-  room.seats.push({ id: playerId, name, isAdmin: room.seats.length === 0 });
-  return room;
+  if (lobby.seats.length >= MAX_SEATS) throw new Error("lobby_full");
+  lobby.seats.push({ id: playerId, name, isAdmin: lobby.seats.length === 0 });
+  return lobby;
 }
 
-export function leaveRoom(id: string, playerId: string) {
-  const room = getRoom(id);
-  if (!room) return;
-  room.seats = room.seats.filter((s) => s.id !== playerId);
-  if (room.seats.length === 0) rooms.delete(room.id);
+export function leaveLobby(id: string, playerId: string) {
+  const lobby = getLobby(id);
+  if (!lobby) return;
+  lobby.seats = lobby.seats.filter((s) => s.id !== playerId);
+  if (lobby.seats.length === 0) lobbies.delete(lobby.id);
 }
 
-function createRoomWithId(id: string): Room {
-  const roomId = id.toUpperCase();
-  const room: Room = { id: roomId, createdAt: Date.now(), seats: [] };
-  rooms.set(roomId, room);
-  return room;
+function createLobbyWithId(id: string): Lobby {
+  const lobbyId = id.toUpperCase();
+  const lobby: Lobby = { id: lobbyId, createdAt: Date.now(), seats: [] };
+  lobbies.set(lobbyId, lobby);
+  return lobby;
 }

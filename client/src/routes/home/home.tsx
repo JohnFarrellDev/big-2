@@ -1,6 +1,6 @@
 import styles from "./home.module.css";
 import { usePlayer } from "../../store/person";
-import { createNewRoom } from "../../api/createNewRoom";
+import { createNewLobby } from "../../api/createNewLobby";
 
 export function Home() {
   const player = usePlayer();
@@ -10,11 +10,14 @@ export function Home() {
   }
 
   async function handleCreate() {
-    // make a request to the server to create a room for our user
-    // take the response and navigate to the room page using the room id
+    // make a request to the server to create a lobby for our user
+    // take the response and navigate to the lobby page using the lobby id
 
-    const res = await createNewRoom({ playerId: player.id, name: player.name });
-    console.log("🚀 ~ handleCreate ~ res:", res);
+    const res = await createNewLobby({
+      playerId: player.id,
+      name: player.name,
+    });
+    window.location.href = `/lobby/${res?.lobbyId}`;
   }
 
   return (
@@ -32,7 +35,7 @@ export function Home() {
         />
         <div className={styles.actions}>
           <button className={styles.createBtn} onClick={handleCreate}>
-            Create a Room
+            Create a Lobby
           </button>
         </div>
       </div>
