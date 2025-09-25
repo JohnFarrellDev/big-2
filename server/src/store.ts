@@ -17,7 +17,7 @@ const rooms = new Map<string, Room>();
 const MAX_SEATS = 20;
 
 export function createRoom(): Room {
-  const id = randomUUID().slice(0, 6).toUpperCase();
+  const id = randomUUID().toUpperCase();
   const room: Room = { id, createdAt: Date.now(), seats: [] };
   rooms.set(id, room);
   return room;

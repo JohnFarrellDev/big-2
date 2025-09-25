@@ -1,17 +1,20 @@
-import { useState } from "react";
 import styles from "./home.module.css";
+import { usePlayer } from "../../store/person";
+import { createNewRoom } from "../../api/createNewRoom";
 
 export function Home() {
-  const [username, setUsername] = useState("");
+  const player = usePlayer();
 
   function updateUsername(e: React.ChangeEvent<HTMLInputElement>) {
-    setUsername(e.target.value);
+    player.setName(e.target.value);
   }
 
-  function handleCreate() {
-    const newRoom = crypto.randomUUID().slice(0, 6).toUpperCase();
-    alert(`Created room: ${newRoom} for user: ${username}`);
-    // TODO: navigate(`/room/${newRoom}`)
+  async function handleCreate() {
+    // make a request to the server to create a room for our user
+    // take the response and navigate to the room page using the room id
+
+    const res = await createNewRoom({ playerId: player.id, name: player.name });
+    console.log("🚀 ~ handleCreate ~ res:", res);
   }
 
   return (
@@ -24,7 +27,7 @@ export function Home() {
         <input
           type="text"
           onChange={updateUsername}
-          value={username}
+          value={player.name}
           className={styles.usernameInput}
         />
         <div className={styles.actions}>
