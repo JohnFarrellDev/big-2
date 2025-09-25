@@ -4,8 +4,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100svh;
-  background: url("https://images.unsplash.com/photo-1624585131222-dd65366b41bd")
-    center/cover no-repeat;
+  background: radial-gradient(circle at center, #531450 0%, #233a6d 100%);
   font-family: "Poppins", sans-serif;
   color: white;
   overflow: hidden;
