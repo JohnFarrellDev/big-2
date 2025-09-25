@@ -17,6 +17,7 @@ export function Home() {
       playerId: player.id,
       name: player.name,
     });
+
     window.location.href = `/lobby/${res?.lobbyId}`;
   }
 

@@ -4,6 +4,7 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { Home } from "./home/home";
+import Lobby from "./lobby/lobby";
 
 const rootRoute = createRootRoute();
 
@@ -15,7 +16,7 @@ const indexRoute = createRoute({
 
 const lobbyRoute = createRoute({
   path: "/lobby/$lobbyId",
-  component: () => <div>Lobby</div>,
+  component: () => <Lobby />,
   getParentRoute: () => rootRoute,
 });
 
