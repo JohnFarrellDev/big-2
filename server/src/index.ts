@@ -47,18 +47,40 @@ async function start() {
     // Use client-provided stable id (localStorage) or fallback to socket.id
     const uid = (socket.handshake.auth?.uid as string) || socket.id;
 
-    socket.on("lobby:join", (payload: { lobbyId: string; name: string }) => {
-      const { lobbyId, name } = z
-        .object({
-          lobbyId: z.uuid(),
-          name: z.string().min(1).max(20),
-        })
-        .parse(payload);
+    socket.on(
+      "lobby:join",
+      (payload: { lobbyId: string; playerName: string }) => {
+        const { lobbyId, playerName } = z
+          .object({
+            lobbyId: z.uuid(),
+            playerName: z.string().min(1).max(20),
+          })
+          .parse(payload);
 
-      const lobby = joinLobby(lobbyId, uid, name);
-      socket.join(lobbyId);
-      io.to(lobbyId).emit("lobby:state", lobby);
-    });
+        const lobby = joinLobby(lobbyId, uid, playerName);
+        socket.join(lobbyId);
+        io.to(lobbyId).emit("lobby:state", lobby);
+      }
+    );
+
+    socket.on(
+      "lobby:set-name",
+      (payload: { lobbyId: string; newLobbyName: string }) => {
+        const { lobbyId, newLobbyName } = z
+          .object({
+            lobbyId: z.uuid(),
+            newLobbyName: z.string().min(1).max(100),
+          })
+          .parse(payload);
+
+        const lobby = getLobby(lobbyId);
+        if (!lobby) return;
+
+        lobby.name = newLobbyName;
+
+        io.to(lobbyId).emit("lobby:state", lobby);
+      }
+    );
 
     socket.on("lobby:leave", (lobbyId: string) => {
       const lobby = leaveLobby(lobbyId, uid);

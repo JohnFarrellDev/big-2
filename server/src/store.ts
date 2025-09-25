@@ -8,6 +8,7 @@ type User = {
 
 export type Lobby = {
   id: string;
+  name: string;
   createdAt: number;
   players: User[];
 };
@@ -18,7 +19,12 @@ const MAX_PLAYERS = 20;
 
 export function createLobby(): Lobby {
   const id = randomUUID().toUpperCase();
-  const lobby: Lobby = { id, createdAt: Date.now(), players: [] };
+  const lobby: Lobby = {
+    id,
+    createdAt: Date.now(),
+    players: [],
+    name: `name-${Math.random() * 1000}`,
+  };
   lobbies.set(id, lobby);
   return lobby;
 }
@@ -54,7 +60,12 @@ export function leaveLobby(id: string, playerId: string): Lobby | null {
 
 function createLobbyWithId(id: string): Lobby {
   const lobbyId = id.toUpperCase();
-  const lobby: Lobby = { id: lobbyId, createdAt: Date.now(), players: [] };
+  const lobby: Lobby = {
+    id: lobbyId,
+    createdAt: Date.now(),
+    players: [],
+    name: `name-${Math.random() * 1000}`,
+  };
   lobbies.set(lobbyId, lobby);
   return lobby;
 }

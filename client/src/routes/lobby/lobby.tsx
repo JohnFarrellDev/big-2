@@ -17,7 +17,7 @@ export default function Lobby() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Lobby: {lobby.id}</h2>
+      <h2 className={styles.title}>{lobby.name}</h2>
       <ul className={styles.list}>
         {lobby.players.map((p) => (
           <li key={p.id} className={styles.player}>

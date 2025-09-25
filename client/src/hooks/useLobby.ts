@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { getSocket } from "../utils/socket";
 
-export type Lobby = { id: string; players: { id: string; name: string }[] };
+export type Lobby = {
+  id: string;
+  name: string;
+  players: { id: string; name: string }[];
+};
 
-export function useLobby(lobbyId: string, name: string) {
+export function useLobby(lobbyId: string, playerName: string) {
   const [lobby, setLobby] = useState<Lobby | null>(null);
 
   useEffect(() => {
@@ -14,7 +18,7 @@ export function useLobby(lobbyId: string, name: string) {
     }
 
     function join() {
-      s.emit("lobby:join", { lobbyId, name });
+      s.emit("lobby:join", { lobbyId, playerName });
     }
 
     s.on("lobby:state", onState);
