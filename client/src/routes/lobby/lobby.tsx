@@ -2,6 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { useLobby } from "../../hooks/useLobby";
 import styles from "./lobby.module.css";
 import { usePlayer } from "../../store/person";
+import { ShareButton } from "../../components/share-menu/ShareButton";
 
 export default function Lobby() {
   const lobbyId = useParams({
@@ -16,7 +17,7 @@ export default function Lobby() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Room {lobby.id}</h2>
+      <h2 className={styles.title}>Lobby: {lobby.id}</h2>
       <ul className={styles.list}>
         {lobby.players.map((p) => (
           <li key={p.id} className={styles.player}>
@@ -24,6 +25,9 @@ export default function Lobby() {
           </li>
         ))}
       </ul>
+      <div>
+        <ShareButton lobbyId={lobby.id} />
+      </div>
     </div>
   );
 }
