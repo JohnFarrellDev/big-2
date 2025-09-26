@@ -4,7 +4,7 @@ import { getSocket } from "../utils/socket";
 export type Lobby = {
   id: string;
   name: string;
-  players: { id: string; name: string }[];
+  players: { id: string; name: string; isAdmin: boolean }[];
 };
 
 export function useLobby(lobbyId: string, playerName: string) {
