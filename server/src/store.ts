@@ -76,6 +76,7 @@ export function renamePlayer(
   newName: string
 ) {
   const lobby = getLobby(lobbyId);
+
   if (!lobby) return;
 
   const player = lobby.players.find((p) => p.id === playerId);

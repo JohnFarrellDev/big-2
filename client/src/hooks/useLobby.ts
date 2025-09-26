@@ -32,7 +32,7 @@ export function useLobby(lobbyId: string, playerName: string) {
       s.off("lobby:state", onState);
       s.off("connect", join);
     };
-  }, [lobbyId, playerName]);
+  }, [lobbyId]);
 
   function renameSelf(newName: string) {
     if (!lobby) return;
