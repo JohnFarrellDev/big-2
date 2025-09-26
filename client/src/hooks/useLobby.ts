@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSocket } from "../utils/socket";
+import { usePlayer } from "../store/person";
 
 export type Lobby = {
   id: string;
@@ -10,9 +11,10 @@ export type Lobby = {
 export function useLobby(lobbyId: string, playerName: string) {
   const [lobby, setLobby] = useState<Lobby | null>(null);
 
-  useEffect(() => {
-    const s = getSocket();
+  const s = getSocket();
+  const { id: playerId } = usePlayer();
 
+  useEffect(() => {
     function onState(state: Lobby) {
       if (state.id === lobbyId) setLobby(state);
     }
@@ -30,7 +32,17 @@ export function useLobby(lobbyId: string, playerName: string) {
       s.off("lobby:state", onState);
       s.off("connect", join);
     };
-  }, [lobbyId, name]);
+  }, [lobbyId, playerName]);
 
-  return lobby;
+  function renameSelf(newName: string) {
+    if (!lobby) return;
+
+    s.emit("player:updateName", {
+      lobbyId: lobby?.id,
+      playerId: playerId,
+      name: newName,
+    });
+  }
+
+  return { lobby, renameSelf };
 }

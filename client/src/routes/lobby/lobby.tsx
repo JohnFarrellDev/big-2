@@ -4,6 +4,7 @@ import styles from "./lobby.module.css";
 import { usePlayer } from "../../store/person";
 import { ShareButton } from "../../components/share-menu/ShareButton";
 import { AdminIcon } from "../../components/icons/AdminIcon";
+import { useState } from "react";
 
 export default function Lobby() {
   const lobbyId = useParams({
@@ -11,10 +12,21 @@ export default function Lobby() {
     select: (p) => p.lobbyId,
   });
 
-  const { name } = usePlayer();
-  const lobby = useLobby(lobbyId, name);
+  const { name: playerName, setName, id } = usePlayer();
+  const { lobby, renameSelf } = useLobby(lobbyId, playerName);
+
+  const [draftPlayerName, setDraftPlayerName] = useState(playerName);
 
   if (!lobby) return <div className={styles.loading}>Connecting…</div>;
+
+  function handleEditName(event: React.ChangeEvent<HTMLInputElement>) {
+    setDraftPlayerName(event.target.value);
+  }
+
+  function handleSubmitName() {
+    setName(draftPlayerName);
+    renameSelf(draftPlayerName);
+  }
 
   return (
     <div className={styles.container}>
@@ -22,7 +34,17 @@ export default function Lobby() {
       <ul className={styles.list}>
         {lobby.players.map((player) => (
           <li key={player.id} className={styles.player}>
-            {player.name}
+            <div className={styles.playerName}>
+              <input
+                type="text"
+                value={player.id === id ? draftPlayerName : player.name}
+                onChange={handleEditName}
+                className={styles.playerNameInput}
+                readOnly={player.id !== id}
+                onBlur={handleSubmitName}
+                maxLength={20}
+              />
+            </div>
             <div className={styles.iconContainer}>
               {player.isAdmin && (
                 <span>

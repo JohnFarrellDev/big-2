@@ -38,7 +38,7 @@
   align-items: center;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(4px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
   font-size: 1.1rem;
@@ -46,9 +46,25 @@
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
-.player:hover {
-  transform: translateY(-2px);
+.playerName {
+  display: flex;
+  gap: 1rem;
+}
+
+.playerNameInput {
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 0.375rem;
   background: rgba(255, 255, 255, 0.15);
+  color: white;
+  outline: none;
+  width: fit-content;
+}
+
+.playerNameInput[readonly] {
+  background: transparent;
+  cursor: default;
 }
 
 .iconContainer {
