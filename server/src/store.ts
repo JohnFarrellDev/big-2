@@ -69,3 +69,17 @@ function createLobbyWithId(id: string): Lobby {
   lobbies.set(lobbyId, lobby);
   return lobby;
 }
+
+export function renamePlayer(
+  lobbyId: string,
+  playerId: string,
+  newName: string
+) {
+  const lobby = getLobby(lobbyId);
+  if (!lobby) return;
+
+  const player = lobby.players.find((p) => p.id === playerId);
+  if (!player) return;
+
+  player.name = newName;
+}
